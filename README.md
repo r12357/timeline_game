@@ -27,7 +27,8 @@ https://github.com/user-attachments/assets/97782563-a311-4c58-b88e-09eb44b8850e
 
 2. **「カードを追加する」を押す**
    - ユーザーが独自のカードを作成
-   -　https://github.com/user-attachments/assets/073b360c-4b45-40aa-8338-eb4d23357819
+
+   https://github.com/user-attachments/assets/073b360c-4b45-40aa-8338-eb4d23357819
 
 
 ## 技術スタック
