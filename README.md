@@ -35,6 +35,8 @@ https://timeline-game-dayo.vercel.app
 
 <video controls src="addcard.mp4" title="Title"></video>
 
+![douga](for_readme/addcard.mp4)
+
 ## 技術スタック
 
 - 使用した言語
