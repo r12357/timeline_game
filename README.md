@@ -25,7 +25,7 @@ https://timeline-game-dayo.vercel.app
 
 - 正解の場合
 
-[![Video](https://img.youtube.com/vi/bYVSdUacVXQ/0.jpg)](https://www.youtube.com/watch?v=bYVSdUacVXQ)
+https://github.com/user-attachments/assets/ddf57dc6-dc73-4935-a4e9-14264a470b45
 
 - 不正解の場合
 
