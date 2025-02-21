@@ -5,14 +5,12 @@ import { twMerge } from "tailwind-merge";
 import Card from "@/app/_components/Card";
 
 const Playground: React.FC = () => {
-  const [windowCenterX, setWindowCenterX] = useState(0);
-  const [windowCenterY, setWindowCenterY] = useState(0);
-
-  useEffect(() => {
-    const { innerHeight: height, innerWidth: width } = window;
-    setWindowCenterX(width / 2);
-    setWindowCenterY(height / 2);
-  }, []);
+  const [windowCenterX, setWindowCenterX] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth / 2 : 0
+  );
+  const [windowCenterY, setWindowCenterY] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight / 2 : 0
+  );
 
   const cardWidth = 100;
   const cardHeight = 140;
@@ -129,7 +127,7 @@ const Playground: React.FC = () => {
             text={card.text}
             fixed={card.fixed}
             fixedPosition={-1}
-            mapList={cardplace}
+            mapList={[]}
             onMove={(x, y) => {
               moveCard(false, index, x, y);
             }}
