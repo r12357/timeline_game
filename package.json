@@ -13,6 +13,9 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@prisma/client": "^6.3.1",
     "@supabase/supabase-js": "^2.48.1",
     "next": "14.2.20",
@@ -25,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-fontawesome": "^1.6.8",
     "eslint": "^8",
     "eslint-config-next": "14.2.20",
     "eslint-plugin-tailwindcss": "^3.18.0",

@@ -3,58 +3,72 @@
 import React, { useState, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import Card from "@/app/_components/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
+type CardProps = {
+  x: number;
+  y: number;
+  text: string;
+  year: number;
+  fixed: boolean;
+};
 
 const Playground: React.FC = () => {
-  const [windowCenterX, setWindowCenterX] = useState(0);
-  const [windowCenterY, setWindowCenterY] = useState(0);
-
-  useEffect(() => {
-    const { innerHeight: height, innerWidth: width } = window;
-    setWindowCenterX(width / 2);
-    setWindowCenterY(height / 2);
-  }, []);
+  const [windowCenterX, setWindowCenterX] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth / 2 : 0
+  );
+  const [windowCenterY, setWindowCenterY] = useState(() =>
+    typeof window !== "undefined" ? window.innerHeight / 2 : 0
+  );
 
   const cardWidth = 100;
   const cardHeight = 140;
   const areaWidth = cardWidth * 7;
   const areaHeight = cardHeight;
 
-  const initialCards = [
-    // { x: 0, y: 0, text: "Initial Card", fixed: true },
-    {
-      x: windowCenterX - 300,
-      y: windowCenterY + 150,
-      text: "Card 1",
-      fixed: false,
-    },
-    {
-      x: windowCenterX - 150,
-      y: windowCenterY + 150,
-      text: "Card 2",
-      fixed: false,
-    },
-    {
-      x: windowCenterX,
-      y: windowCenterY + 150,
-      text: "Card 3",
-      fixed: false,
-    },
-    {
-      x: windowCenterX + 150,
-      y: windowCenterY + 150,
-      text: "Card 4",
-      fixed: false,
-    },
-  ];
-
-  const cardplace: any[] = [false, false, false, false, false, false, false];
-
-  const [cards, setCards] = useState(initialCards);
-  const [highlight, setHighlight] = useState(cardplace);
+  const [cards, setCards] = useState<CardProps[]>([]);
+  const [highlight, setHighlight] = useState<(boolean | null)[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log(window.innerHeight, window.innerWidth);
-  }, []);
+    const fetchCards = async () => {
+      try {
+        const response = await fetch("/api/getCard");
+        if (!response.ok) {
+          throw new Error("Failed to fetch cards");
+        }
+        const data = await response.json();
+        const initialCards = data.map((card: CardProps, index: number) => ({
+          x: windowCenterX - 300 + 150 * index,
+          y: windowCenterY + 150,
+          text: card.text,
+          year: card.year,
+          fixed: false,
+        }));
+        setCards(initialCards);
+      } catch (error) {
+        setFetchError(
+          error instanceof Error
+            ? error.message
+            : "予期せぬエラーが発生しました"
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCards();
+  }, [windowCenterX, windowCenterY]);
 
   const moveCard = (fixed: boolean, index: number, x: number, y: number) => {
     const newCards = [...cards];
@@ -82,23 +96,9 @@ const Playground: React.FC = () => {
         y + cardHeight / 2 < windowCenterY + cardHeight / 2 &&
         y + cardHeight / 2 > windowCenterY - cardHeight / 2;
 
-      const time = setTimeout(() => {
-        console.log(
-          _areaX,
-          x,
-          _areaX + cardWidth,
-          windowCenterY - cardHeight / 2,
-          y,
-          windowCenterY + cardHeight / 2,
-          isTouching
-        );
-      }, 10000);
-
       if (highlight[index] === null) continue;
 
       if (isTouching) {
-        console.log("place", index, x, y, _areaX);
-        console.log(highlight);
         setHighlight((prev) => {
           const newHighlight = [...prev];
           newHighlight[index] = true;
@@ -113,6 +113,19 @@ const Playground: React.FC = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="text-gray-500">
+        <FontAwesomeIcon icon={faSpinner} className="mr-1 animate-spin" />
+        Loading...
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return <div>{fetchError}</div>;
+  }
 
   return (
     <div className="flex h-screen items-center justify-center text-center">
@@ -143,7 +156,6 @@ const Playground: React.FC = () => {
                     windowCenterY - areaHeight / 2
                   );
                   _setHighlight(i, null);
-                  console.log(highlight);
                 }
               });
             }}
@@ -187,30 +199,6 @@ const Playground: React.FC = () => {
             className={`ml-[600px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
           ></div>
         )}
-        {/* {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div
-            key={i}
-            className={twMerge(
-              highlight[i]
-                ? `h-[${cardHeight}px] w-[${cardWidth}px] ml-[${cardWidth * i}px] bg-black-300 border-4 border-blue-500`
-                : ""
-            )}
-          ></div>
-        ))} */}
-
-        {/*
-        {highlight[1] && (
-          <div className="ml-[130px] h-[182px] w-[130px] border-4 border-blue-500 bg-black"></div>
-        )}
-        {highlight[2] && (
-          <div className="ml-[260px] h-[182px] w-[130px] border-4 border-blue-500 bg-black"></div>
-        )}
-        {highlight[3] && (
-          <div className="ml-[390px] h-[182px] w-[130px] border-4 border-blue-500 bg-black"></div>
-        )}
-        {highlight[4] && (
-          <div className="ml-[520px] h-[182px] w-[130px] border-4 border-blue-500 bg-black"></div>
-        )} */}
       </div>
     </div>
   );
