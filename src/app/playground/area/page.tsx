@@ -12,6 +12,7 @@ type CardProps = {
   text: string;
   year: number;
   fixed: boolean;
+  fixedPosition: number;
 };
 
 const Playground: React.FC = () => {
@@ -39,6 +40,7 @@ const Playground: React.FC = () => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -49,11 +51,12 @@ const Playground: React.FC = () => {
         }
         const data = await response.json();
         const initialCards = data.map((card: CardProps, index: number) => ({
-          x: windowCenterX - 300 + 150 * index,
+          x: windowCenterX - 300 + 150 * index - cardWidth / 2,
           y: windowCenterY + 150,
           text: card.text,
           year: card.year,
           fixed: false,
+          fixedPosition: -1,
         }));
         setCards(initialCards);
       } catch (error) {
@@ -70,9 +73,15 @@ const Playground: React.FC = () => {
     fetchCards();
   }, [windowCenterX, windowCenterY]);
 
-  const moveCard = (fixed: boolean, index: number, x: number, y: number) => {
+  const moveCard = (
+    fixed: boolean,
+    index: number,
+    x: number,
+    y: number,
+    fixedPosition: number
+  ) => {
     const newCards = [...cards];
-    newCards[index] = { ...newCards[index], x, y, fixed };
+    newCards[index] = { ...newCards[index], x, y, fixed, fixedPosition };
     setCards(newCards);
   };
 
@@ -114,6 +123,25 @@ const Playground: React.FC = () => {
     }
   };
 
+  const fixAllCards = () => {
+    const newCards = cards.map((card) => ({ ...card, fixed: true }));
+    setCards(newCards);
+    checkResult(newCards);
+  };
+
+  const checkResult = (cards: CardProps[]) => {
+    const sortedCards = [...cards].sort(
+      (a, b) => a.fixedPosition - b.fixedPosition
+    );
+    for (let i = 0; i < sortedCards.length - 1; i++) {
+      if (sortedCards[i].year > sortedCards[i + 1].year) {
+        setResult("誤答です");
+        return;
+      }
+    }
+    setResult("正解です");
+  };
+
   if (isLoading) {
     return (
       <div className="text-gray-500">
@@ -129,76 +157,88 @@ const Playground: React.FC = () => {
 
   return (
     <div className="flex h-screen items-center justify-center text-center">
-      <div
-        className={twMerge(
-          `flex h-[140px] w-[700px] flex-row items-center justify-start bg-gray-200`
-        )}
-      >
-        {cards.map((card, index) => (
-          <Card
-            key={index}
-            x={card.x}
-            y={card.y}
-            text={card.text}
-            fixed={card.fixed}
-            fixedPosition={-1}
-            mapList={[]}
-            onMove={(x, y) => {
-              moveCard(false, index, x, y);
-            }}
-            onDrop={(x, y) => {
-              [0, 1, 2, 3, 4, 5, 6].map((i) => {
-                if (highlight[i] === true) {
-                  moveCard(
-                    true,
-                    index,
-                    windowCenterX - areaWidth / 2 + cardWidth * i,
-                    windowCenterY - areaHeight / 2
-                  );
-                  _setHighlight(i, null);
-                }
-              });
-            }}
-            onPlaceInMove={(x, y) => {
-              checkHighlight(x, y);
-            }}
-          />
-        ))}
-        {highlight[0] && (
-          <div
-            className={`h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[1] && (
-          <div
-            className={`ml-[100px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[2] && (
-          <div
-            className={`ml-[200px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[3] && (
-          <div
-            className={`ml-[300px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[4] && (
-          <div
-            className={`ml-[400px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[5] && (
-          <div
-            className={`ml-[500px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
-        {highlight[6] && (
-          <div
-            className={`ml-[600px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
-          ></div>
-        )}
+      <div>
+        <div
+          className={twMerge(
+            `flex h-[140px] w-[700px] flex-row items-center justify-start bg-gray-200`
+          )}
+        >
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              x={card.x}
+              y={card.y}
+              text={card.text}
+              fixed={card.fixed}
+              fixedPosition={-1}
+              mapList={[]}
+              onMove={(x, y) => {
+                moveCard(false, index, x, y, -1);
+              }}
+              onDrop={(x, y) => {
+                [0, 1, 2, 3, 4, 5, 6].map((i) => {
+                  if (highlight[i] === true) {
+                    moveCard(
+                      false,
+                      index,
+                      windowCenterX - areaWidth / 2 + cardWidth * i,
+                      windowCenterY - areaHeight / 2,
+                      i
+                    );
+                    _setHighlight(i, null);
+                  }
+                });
+              }}
+              onPlaceInMove={(x, y) => {
+                checkHighlight(x, y);
+              }}
+            />
+          ))}
+          {highlight[0] && (
+            <div
+              className={`h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[1] && (
+            <div
+              className={`ml-[100px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[2] && (
+            <div
+              className={`ml-[200px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[3] && (
+            <div
+              className={`ml-[300px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[4] && (
+            <div
+              className={`ml-[400px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[5] && (
+            <div
+              className={`ml-[500px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+          {highlight[6] && (
+            <div
+              className={`ml-[600px] h-[140px] w-[100px] border-4 border-blue-500 bg-black`}
+            ></div>
+          )}
+        </div>
+        <div className=" flex justify-center">
+          <button
+            onClick={fixAllCards}
+            className="absolute mt-4 rounded bg-blue-500 px-4 py-2 text-white"
+          >
+            すべて固定
+          </button>
+          {result && <div className="absolute mt-16 text-xl">{result}</div>}
+        </div>
       </div>
     </div>
   );
