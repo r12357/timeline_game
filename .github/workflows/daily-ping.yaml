@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Send HTTP GET request
         run: |
-          curl -X GET "https://timeline-game-var0.vercel.app" -v --fail || exit 1
+          curl -X GET "https://timeline-game-dayo.vercel.app" -v --fail || exit 1
 
       - name: Log request time
         run: |
