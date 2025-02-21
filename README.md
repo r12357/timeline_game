@@ -33,7 +33,7 @@ https://timeline-game-dayo.vercel.app
 
 ### 「カードを追加する」を押したあとの動作
 
-![aa](for_readme/addcard.mp4)
+<video controls src="addcard.mp4" title="Title"></video>
 
 ## 技術スタック
 
