@@ -3,7 +3,7 @@
 TimeLine Game（タイムラインゲーム）は、歴史上の出来事が書かれたカードを時系列順に並べるゲームです。
 オンラインで遊べる類似のゲームが少ないため、「ないなら作ってしまおう」という思いで開発しました。
 
-📌 **公開URL:** [https://timeline-game-dayo.vercel.app](https://timeline-game-dayo.vercel.app)
+**公開URL:** [https://timeline-game-dayo.vercel.app](https://timeline-game-dayo.vercel.app)
 
 ## 特徴
 
