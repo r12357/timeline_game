@@ -10,11 +10,11 @@ const AboutPage: React.FC = () => {
         タイムラインゲーム
       </h1>
 
-      {/* ��ームの説明 */}
+      {/* ゲームの説明 */}
       <div className="mb-6 w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
         <h2 className="mb-3 text-2xl font-semibold">ゲームの説明</h2>
         <p className="text-gray-700">
-          このゲームは、時系列を表現し、推移する要素を操作して進めていきます。
+          このゲームは，出来事が書かれたカードが最初に配られ，それを時系列に並べるゲームです．(右が未来，左が過去)
         </p>
       </div>
     </div>
