@@ -17,13 +17,18 @@ TimeLine Game（タイムラインゲーム）は、歴史上の出来事が書�
 
    - カードを時系列順に並べる
    - **正解時の動作:**
-     https://github.com/user-attachments/assets/11f726ea-81de-4ae3-a831-51611ebc6b3f
+     
+https://github.com/user-attachments/assets/f136e5eb-8ecd-4a46-b440-df2336a267c3
+
    - **不正解時の動作:**
-     https://github.com/user-attachments/assets/e1d6c450-4768-4c04-b23f-5dec3e3c3051
+
+https://github.com/user-attachments/assets/97782563-a311-4c58-b88e-09eb44b8850e
+
 
 2. **「カードを追加する」を押す**
    - ユーザーが独自のカードを作成
-   - https://github.com/user-attachments/assets/70caab9a-ab93-4773-bc48-cbd3acf94b38
+   -　https://github.com/user-attachments/assets/073b360c-4b45-40aa-8338-eb4d23357819
+
 
 ## 技術スタック
 
