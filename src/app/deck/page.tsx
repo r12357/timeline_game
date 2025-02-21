@@ -33,23 +33,24 @@ export default function DeckPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="relative flex w-96 flex-col gap-4 rounded-lg bg-white p-6 shadow-lg">
+    <div className="flex h-screen items-center justify-center bg-gray-100">
+      <div className="relative flex w-full max-w-md flex-col gap-6 rounded-lg bg-white p-8 shadow-lg">
+        <h1 className="text-2xl font-bold text-gray-800">カードを追加</h1>
         <textarea
-          className="h-32 w-full border p-2"
+          className="h-32 w-full rounded border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
           placeholder="カードの内容を入力"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
         <input
           type="number"
-          className="w-full border p-2"
+          className="w-full rounded border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
           placeholder="年号"
           value={year}
           onChange={(e) => setYear(e.target.value)}
         />
         <button
-          className="absolute bottom-4 right-4 rounded bg-blue-500 p-2 text-white disabled:opacity-50"
+          className="w-full rounded bg-blue-500 p-3 text-white hover:bg-blue-600 disabled:opacity-50"
           onClick={handleSubmit}
           disabled={loading}
         >
