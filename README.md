@@ -25,7 +25,7 @@ https://timeline-game-dayo.vercel.app
 
 - 正解の場合
 
-<video src="for_readme/correct.mp4" controls="true"></video>
+[![Video](https://img.youtube.com/vi/bYVSdUacVXQ/0.jpg)](https://www.youtube.com/watch?v=bYVSdUacVXQ)
 
 - 不正解の場合
 
@@ -33,7 +33,7 @@ https://timeline-game-dayo.vercel.app
 
 ### 「カードを追加する」を押したあとの動作
 
-<video src="for_readme/addcard.mp4" controls="true"></video>
+![aa](for_readme/addcard.mp4)
 
 ## 技術スタック
 
