@@ -1,10 +1,17 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 const AboutPage: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
+      {/* 戻るボタン */}
+      <Link href="/">
+        <div className="absolute left-4 top-4 rounded bg-blue-500 px-4 py-2 text-white">
+          ホームに戻る
+        </div>
+      </Link>
       {/* タイトル */}
       <h1 className="mb-6 text-4xl font-bold text-gray-800">
         タイムラインゲーム

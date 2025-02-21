@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function DeckPage() {
   const [text, setText] = useState("");
@@ -57,6 +58,11 @@ export default function DeckPage() {
           {loading ? "追加中..." : "決定"}
         </button>
       </div>
+      <Link href="/">
+        <div className="absolute left-4 top-4 rounded bg-blue-500 px-4 py-2 text-white">
+          ホームに戻る
+        </div>
+      </Link>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import Card from "@/app/_components/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 type CardProps = {
   x: number;
@@ -238,6 +239,13 @@ const Playground: React.FC = () => {
             すべて固定
           </button>
           {result && <div className="absolute mt-16 text-xl">{result}</div>}
+        </div>
+        <div>
+          <Link href="/">
+            <div className="absolute left-4 top-4 rounded bg-blue-500 px-4 py-2 text-white">
+              ホームに戻る
+            </div>
+          </Link>
         </div>
       </div>
     </div>
