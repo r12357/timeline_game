@@ -25,17 +25,15 @@ https://timeline-game-dayo.vercel.app
 
 - 正解の場合
 
-https://github.com/user-attachments/assets/ddf57dc6-dc73-4935-a4e9-14264a470b45
+https://github.com/user-attachments/assets/11f726ea-81de-4ae3-a831-51611ebc6b3f
 
 - 不正解の場合
 
-<video src="for_readme/incorrect.mp4" controls="true"></video>
+https://github.com/user-attachments/assets/e1d6c450-4768-4c04-b23f-5dec3e3c3051
 
 ### 「カードを追加する」を押したあとの動作
 
-<video controls src="addcard.mp4" title="Title"></video>
-
-![douga](for_readme/addcard.mp4)
+https://github.com/user-attachments/assets/70caab9a-ab93-4773-bc48-cbd3acf94b38
 
 ## 技術スタック
 
